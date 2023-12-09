@@ -37,7 +37,7 @@ const Slider: React.FC<HorizontalScrollProps> = ({ buttons }) => {
         ORDER FOR DELIVERY!
       </h1>
       <div
-        className="flex ml-3 h-full overflow-y-hidden"
+        className="flex lg:gap-7 ml-3 h-full overflow-y-hidden"
         ref={scrollRef}
         style={{
           overflowX: "hidden",

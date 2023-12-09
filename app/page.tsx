@@ -1,4 +1,4 @@
-import CardSlider from "./components/Card";
+import Card from "./components/Card";
 import Header from "./components/Header";
 import Slider from "./components/slider";
 const buttons = [
@@ -66,10 +66,9 @@ export default function Home() {
   return (
     <div className=" overflow-hidden">
       <Header />
-
       <main>
         <Slider buttons={buttons} />
-        <CardSlider meals={meals} />
+        <Card meals={meals} />
       </main>
     </div>
   );

@@ -13,10 +13,24 @@ export default function SignIn({ handleClose }: { handleClose: () => void }) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
+  const isEmailValid = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+  };
+  const isPasswordValid = (password: string) => {
+    // Password must be at least 8 characters long and contain at least one letter and one number
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return passwordRegex.test(password);
+  };
 
   useEffect(() => {
-    if (formState.email && formState.password) {
+    if (isPasswordValid(formState.password) && isEmailValid(formState.email)) {
       setDisabled(false);
+    } else if (
+      !isPasswordValid(formState.password) ||
+      !isEmailValid(formState.email)
+    ) {
+      setDisabled(true);
     }
   }, [formState]);
 
@@ -27,7 +41,7 @@ export default function SignIn({ handleClose }: { handleClose: () => void }) {
     }
     setTimeout(() => {
       handleClose();
-    },2000);
+    }, 2000);
   };
   return (
     <div className="flex flex-col justify-center items-center">
@@ -65,6 +79,9 @@ export default function SignIn({ handleClose }: { handleClose: () => void }) {
             />
           </div>
         </div>
+        {formState.email && !isEmailValid(formState.email) && (
+          <div className="text-red-500">Invalid email format</div>
+        )}
         <div className="flex gap-7 pr-3 justify-center items-center">
           <label className="font-semibold ml-2" htmlFor="guests">
             PASSWORD
@@ -86,7 +103,9 @@ export default function SignIn({ handleClose }: { handleClose: () => void }) {
             />
           </div>
         </div>
-
+        {formState.password && !isPasswordValid(formState.password) && (
+          <div className="text-red-500">Invalid password format</div>
+        )}
         <button
           disabled={disabled}
           onClick={handleClick}
@@ -96,7 +115,13 @@ export default function SignIn({ handleClose }: { handleClose: () => void }) {
           <h3>Sign In</h3>
         </button>
       </form>
-      {logedIn ? <div className="mt-10 text-green-500 font-bold text-4xl">you loged in</div> : ""}
+      {logedIn ? (
+        <div className="mt-10 text-green-500 font-bold text-4xl">
+          you loged in
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
