@@ -27,7 +27,7 @@ export default function AboutUs() {
         <div>
           <Image
             className="m-10 w-[450px]"
-            src={`/Rectangle 4.png`}
+            src={`/Rectangle4.png`}
             width={600}
             height={600}
             alt=""
